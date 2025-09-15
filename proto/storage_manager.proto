@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package storagemgr;
+
+import "common.proto";
+
+option go_package = "github.com/off-chain-storage/offchain-storage-manager/proto";
+
+service StorageManager {
+    rpc StoreBlocks(ExecutableConsensusOutput) returns (StoreResponse);
+}
+
+message StoreResponse {
+    bool success = 1;
+    string message = 2;
+}

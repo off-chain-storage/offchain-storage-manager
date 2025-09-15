@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package storagemgr;
+
+option go_package = "github.com/off-chain-storage/offchain-storage-manager/proto";
+
+import "google/protobuf/wrappers.proto";
+
+// ===== Batch =====
+
+// Each Block 
+message ExecutableEthereumBatch {
+  bytes digest = 1; // Block metadata - header
+  repeated TransactionSigned data = 2; // Block transactions - body
+}
+
+// 여러 배치를 한 번에 보낼 용도의 래퍼 (예시의 data: [ ... ] 구조)
+message ExecutableConsensusOutput {
+  repeated ExecutableEthereumBatch data = 1;
+}
+
+// ===== Tx Signed =====
+
+message Signature {
+  bytes r = 1;
+  bytes s = 2;     
+  bool odd_y_parity = 3;
+}
+
+message TransactionSigned {
+  bytes hash = 1;
+  Signature signature = 2;
+
+  oneof tx {
+    TxLegacy legacy = 10;
+  }
+}
+
+// ===== Legacy Tx =====
+
+message To {
+  oneof kind {
+    bytes call = 1;
+    bool create = 2;
+  }
+}
+
+message TxLegacy {
+  google.protobuf.UInt64Value chain_id = 1;
+  uint64 nonce = 2;
+  bytes gas_price = 3;
+  uint64 gas_limit = 4;
+  To to = 5;
+  bytes value = 6;
+  bytes input = 7;
+}
