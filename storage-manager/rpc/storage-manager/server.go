@@ -35,12 +35,13 @@ func (m *Manager) StoreBlocks(ctx context.Context, in *storagemgrPB.ExecutableCo
 		}, nil
 	}
 
-	totalSize, avgTxPerBatch, avgTxSize, pct := getStats(in)
+	// Compute stats for logging: full block size, extracted info size, and savings
+	blockSize := len(raw)
+	extractedSize, savingsPct := getExtractionStats(in, blockSize)
 	log.WithFields(map[string]interface{}{
-		"in_size":          util.HumanBytes(int64(totalSize)),
-		"avg_tx_per_batch": fmt.Sprintf("%.3f", avgTxPerBatch),
-		"avg_tx_size":      util.HumanBytes(int64(avgTxSize)),
-		"avg_tx_pct":       fmt.Sprintf("%.3f%%", pct),
+		"block_size":       util.HumanBytes(int64(blockSize)),
+		"extracted_size":   util.HumanBytes(int64(extractedSize)),
+		"data_savings_pct": fmt.Sprintf("%.3f%%", savingsPct),
 	}).Info("StoreBlocks stats")
 
 	// Generate a stable CID-like identifier by SHA256
@@ -101,31 +102,26 @@ func (m *Manager) StoreBlocks(ctx context.Context, in *storagemgrPB.ExecutableCo
 	}, nil
 }
 
-func getStats(in *storagemgrPB.ExecutableConsensusOutput) (totalSize int, avgTxPerBatch float64, avgTxSize float64, pct float64) {
-	// Stats: total message size and TransactionSigned distribution
-	var totalTxCount int
+func getExtractionStats(in *storagemgrPB.ExecutableConsensusOutput, blockSize int) (extractedSize int, savingsPct float64) {
+	// Calculate total extracted info size (sum of tx bytes) and savings ratio
 	var totalTxBytes int
-
 	for _, batch := range in.GetData() {
 		for _, tx := range batch.GetData() {
-			totalTxCount++
 			if bs, e := (proto.MarshalOptions{Deterministic: true}).Marshal(tx); e == nil {
 				totalTxBytes += len(bs)
 			}
 		}
 	}
-	batchCount := len(in.GetData())
 
-	if batchCount > 0 {
-		avgTxPerBatch = float64(totalTxCount) / float64(batchCount)
+	if blockSize > 0 {
+		ratio := 1.0 - (float64(totalTxBytes) / float64(blockSize))
+		if ratio < 0 {
+			ratio = 0
+		}
+		if ratio > 1 {
+			ratio = 1
+		}
+		savingsPct = ratio * 100.0
 	}
-
-	if totalTxCount > 0 {
-		avgTxSize = float64(totalTxBytes) / float64(totalTxCount)
-	}
-
-	if totalSize > 0 {
-		pct = (avgTxSize / float64(totalSize)) * 100.0
-	}
-	return totalSize, avgTxPerBatch, avgTxSize, pct
+	return totalTxBytes, savingsPct
 }
