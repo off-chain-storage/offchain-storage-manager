@@ -1,0 +1,24 @@
+db:
+  redis:
+    address: redis # redis container name or redis host address
+    port: 6379
+    password: admin
+    dbname: 0
+  mongodb:
+    host: mongodb # mongodb container name or mongodb host address
+    port: 27017
+    replica_set: rs0
+    dbname: db_name # mongodb database name
+    collection: collection_name # mongodb collection name
+    user: root
+    password: root
+
+grpc:
+  listen_addr: 0.0.0.0:8080 # grpc listen address
+  max_msg_size: 1024 # grpc max message size
+  timeout: 10s
+
+log:
+  format: text
+  level: debug
+  file: ""
