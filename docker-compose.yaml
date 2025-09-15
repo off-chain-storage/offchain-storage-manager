@@ -1,0 +1,19 @@
+services:
+  storage-manager:
+    container_name: storage-manager
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      custom_network:
+        ipv4_address: 172.28.0.10
+
+networks:
+  custom_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
