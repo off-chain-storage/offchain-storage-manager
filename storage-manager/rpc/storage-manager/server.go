@@ -114,14 +114,14 @@ func getExtractionStats(in *storagemgrPB.ExecutableConsensusOutput, blockSize in
 	}
 
 	if blockSize > 0 {
-		ratio := 1.0 - (float64(totalTxBytes) / float64(blockSize))
-		if ratio < 0 {
-			ratio = 0
+		reduction := float64(totalTxBytes) / float64(blockSize)
+		if reduction < 0 {
+			reduction = 0
 		}
-		if ratio > 1 {
-			ratio = 1
+		if reduction > 1 {
+			reduction = 1
 		}
-		savingsPct = ratio * 100.0
+		savingsPct = reduction * 100.0
 	}
 	return totalTxBytes, savingsPct
 }
