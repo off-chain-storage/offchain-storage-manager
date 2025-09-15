@@ -29,3 +29,6 @@ go.work
 
 test_output/
 control_logs/
+ 
+# Ignore built binary for storage-manager
+cmd/storage-manager/storage-manager
