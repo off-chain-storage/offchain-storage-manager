@@ -1,9 +1,4 @@
 db:
-  redis:
-    address: redis # redis container name or redis host address
-    port: 6379
-    password: admin
-    dbname: 0
   mongodb:
     host: mongodb # mongodb container name or mongodb host address
     port: 27017

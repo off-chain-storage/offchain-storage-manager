@@ -25,14 +25,6 @@ type GRPCConfig struct {
 	Timeout    time.Duration
 }
 
-type RedisConfig struct {
-	Host string
-	Port string
-	Name int
-	User string
-	Pass string
-}
-
 type MongoDBConfig struct {
 	Host       string
 	Port       string
@@ -45,7 +37,6 @@ type MongoDBConfig struct {
 
 type DatabaseConfig struct {
 	MongoDB MongoDBConfig
-	Redis   RedisConfig
 }
 
 func logConfig() (LogConfig, error) {
@@ -108,14 +99,6 @@ func grpcConfig() (GRPCConfig, error) {
 }
 
 func databaseConfig() (DatabaseConfig, error) {
-	redis := RedisConfig{
-		Host: viper.GetString("db.redis.address"),
-		Port: viper.GetString("db.redis.port"), // default fallback; consider parsing if port is part of address
-		Name: viper.GetInt("db.redis.dbname"),
-		User: "",
-		Pass: viper.GetString("db.redis.password"),
-	}
-
 	mongoDB := MongoDBConfig{
 		Host:       viper.GetString("db.mongodb.host"),
 		Port:       viper.GetString("db.mongodb.port"),
@@ -127,7 +110,6 @@ func databaseConfig() (DatabaseConfig, error) {
 	}
 
 	return DatabaseConfig{
-		Redis:   redis,
 		MongoDB: mongoDB,
 	}, nil
 }

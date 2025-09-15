@@ -56,7 +56,7 @@ func (s *StorageManager) registerBaseServices(ctx context.Context) error {
 	log.Debugln("Registering base services")
 
 	// Register DB Service
-	log.Debugln("[Base] Registering Redis Service")
+	log.Debugln("[Base] Registering DB Service")
 	dbService, err := db.NewDBService(s.cfg)
 	if err != nil {
 		log.WithError(err).Fatal("failed to initialize db service")
