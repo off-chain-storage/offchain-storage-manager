@@ -17,20 +17,20 @@ var log = util.NewLogger("grpc.client")
 // gRPC msg size limit - 1GB
 const maxSize = 1024 * 1024 * 1024
 
-type Config struct {
-	Addr    string
-	Path    string
-	OutPath string
-	Verify  bool
+type config struct {
+	addr    string
+	path    string
+	outPath string
+	verify  bool
 }
 
 func main() {
-	cfg := Config{
-		Addr: "localhost:8080", // WARN: Please change Server Address
+	cfg := config{
+		addr: "localhost:8080", // WARN: Please change Server Address
 		// WARN: Alternative Path
-		Path:    "./data/data.log",
-		OutPath: "./data/output.json",
-		Verify:  true,
+		path:    "./data/data.log",
+		outPath: "./data/output.json",
+		verify:  true,
 	}
 
 	// gRPC Opts...
@@ -42,14 +42,14 @@ func main() {
 	}
 
 	// gRPC New Connection
-	conn, err := grpc.NewClient(cfg.Addr, dialOpts...)
+	conn, err := grpc.NewClient(cfg.addr, dialOpts...)
 	if err != nil {
 		log.Fatalf("dial failed: %v", err)
 	}
 	defer conn.Close()
 
 	// parse log by protojson (INPUT: txt file -> OUTPUT: protojson converted file)
-	req, err := parseLog(cfg.Path, cfg.OutPath, cfg.Verify)
+	req, err := parseLog(cfg.path, cfg.outPath, cfg.verify)
 	if err != nil {
 		log.Fatalf("parse: %v", err)
 	}
