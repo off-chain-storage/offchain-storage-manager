@@ -77,7 +77,7 @@ func (m *Manager) StoreBlocks(ctx context.Context, in *storagemgrPB.ExecutableCo
 		}
 		return &storagemgrPB.StoreResponse{
 			Success: true,
-			Message: cid,
+			Message: fmt.Sprintf("%.3f", savingsPct), // extracted size string
 		}, nil
 	}
 
@@ -92,7 +92,7 @@ func (m *Manager) StoreBlocks(ctx context.Context, in *storagemgrPB.ExecutableCo
 		}
 		return &storagemgrPB.StoreResponse{
 			Success: true,
-			Message: cid,
+			Message: fmt.Sprintf("%.3f", savingsPct), // extracted size string
 		}, nil
 	}
 

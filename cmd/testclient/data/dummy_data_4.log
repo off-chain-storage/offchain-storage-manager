@@ -28,31 +28,6 @@ ExecutableConsensusOutput: {
                         },
                     ),
                 },
-                TransactionSigned {
-                    hash: 0x98d48c0835500c826e918cc3d9eac033c663fa037e0fd7365ec2274ef0b67c59,
-                    signature: Signature {
-                        r: 0x4795fee701abb445fc6c4ed125112a59bc413b44ec0a0edd5f856d3d338b6237_U256,
-                        s: 0xbe007cba429293f60205854f14a15a317003de33ba9fe8857b0d741ef714d6a3_U256,
-                        odd_y_parity: true,
-                    },
-                    transaction: Legacy(
-                        TxLegacy {
-                            chain_id: Some(
-                                987654,
-                            ),
-                            nonce: 1,
-                            gas_price: 0,
-                            gas_limit: 500000,
-                            to: Call(
-                                0x24242484958ae49d2a4f865c92552b904160b3bf,
-                            ),
-                            value: TxValue(
-                                0x0_U256,
-                            ),
-                            input: 0x5a3dc2e0dadceb433dffa83b97e6db2059da4d4d7430f3850ae02c4259c36ca048188ed78e3e016f37c22a6117c7d23fa08d0084f77ce2f823c3d084561df7d855875d86074e24504264ebf957680d951bbcd575504f04dad8800d4e840cc12a3914ab85efb6e0b960b107e35c9bec48102707cf6731be4469045fa6b1da72be83e48b7e000d3ac561f326742bf5edeaf728aa67264c542ab0914aeddfbcb8aae636f50b0aa61e0e7f16e2b37d08bc082c518ec295e7dbb65f41a69c956792fdf741df1db92641e21d5af559074470469764c15ea67c41d8fbaa5b5cbecafbde9c0aee9cb98001c55a167be3397d325f90ac2596fcfbc0cfb298d5f79b07c11f,
-                        },
-                    ),
-                },
             ],
         },
         ExecutableEthereumBatch {
@@ -81,11 +56,29 @@ ExecutableConsensusOutput: {
                         },
                     ),
                 },
-            ],
-        },
-        ExecutableEthereumBatch {
-            digest: 2oUHXJwWhhuNcV2IUCNjG4nlbHCnZ9NoMWmx5Bar8ew=,
-            data: [
+                TransactionSigned {
+                    hash: 0xc58322a3dc0f2bf9ae0cb2c05476c1682b8a19cb4ca35aaecbb8bd613386f423,
+                    signature: Signature {
+                        r: 0xf3e3b3c2fcb9635d7b54301bd0e258659987f4fe6aa06bcf5372ea52e313b294_U256,
+                        s: 0x1edb97104bfd6dcc9a3e2c706df34fc02af63c6b4e8efae5691d34964e5a46fc_U256,
+                        odd_y_parity: false,
+                    },
+                    transaction: Legacy(
+                        TxLegacy {
+                            chain_id: Some(
+                                987654,
+                            ),
+                            nonce: 2,
+                            gas_price: 100,
+                            gas_limit: 800000,
+                            to: Create,
+                            value: TxValue(
+                                0x5_U256,
+                            ),
+                            input: 0x7e94cc90faf9fb59b575b3c46ff1f0439cbe9a2592c3c6926af2066c87610f5b981729b2a095005a7068a020eb4e3d779c527c799e1aeec1285b32de550baaf33a99750a5446c5bb350c46c429b2fc0eec5358c105b22bd9047124bcc8e772f1247618dbe081c58a6416bdb23369143d067be380cf76ea148ef7162596e5033e,
+                        },
+                    ),
+                },
                 TransactionSigned {
                     hash: 0xc58322a3dc0f2bf9ae0cb2c05476c1682b8a19cb4ca35aaecbb8bd613386f423,
                     signature: Signature {
